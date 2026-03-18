@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
 
 /**
  * The type Tasks.
@@ -76,21 +78,27 @@ public class Tasks {
 					break;
 				case RAJADA:
 					if (game != null) {
-						// 1. Capturar as coordenadas que o utilizador vai escrever (ex: A1 B2 C3)
-						// Nota: Precisamos de ler os próximos 3 tokens do Scanner se a rajada for de 3
-						System.out.println("Introduza as coordenadas da rajada:");
-						String tiro1 = in.next();
-						String tiro2 = in.next();
-						String tiro3 = in.next();
 
-						// 2. Executar a lógica do jogo (podes precisar de adaptar como o jogo lê)
-						// Se o game.readEnemyFire() for rígido, podes passar os dados capturados
-						game.readEnemyFire(new Scanner(tiro1 + " " + tiro2 + " " + tiro3));
+						org.joda.time.DateTime inicio = new org.joda.time.DateTime();
 
-						// 3. Adicionar os TIROS REAIS ao histórico para o PDF
-						historico.add("Rajada: " + tiro1 + ", " + tiro2 + ", " + tiro3);
+						System.out.println("Introduza as 3 coordenadas (ex: A1 B2 C3):");
+
+						String t1 = in.next();
+						String t2 = in.next();
+						String t3 = in.next();
+
+						// 2. Executa a lógica do tiro
+						game.readEnemyFire(new java.util.Scanner(t1 + " " + t2 + " " + t3));
+
+						org.joda.time.DateTime fim = new org.joda.time.DateTime();
+
+						int segundos = org.joda.time.Seconds.secondsBetween(inicio, fim).getSeconds();
+
+						String registo = "Rajada: [" + t1 + ", " + t2 + ", " + t3 + "] | Tempo de decisão: " + segundos + "s";
+						historico.add(registo);
 						historico.add("Resultado -> Acertos: " + game.getHits() + " | Restantes: " + game.getRemainingShips());
 
+						System.out.println(registo);
 						myFleet.printStatus();
 						game.printMyBoard(true, false);
 					}
