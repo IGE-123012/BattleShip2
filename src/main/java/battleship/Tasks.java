@@ -5,6 +5,8 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Tasks.
@@ -14,6 +16,7 @@ public class Tasks {
 	 * The constant LOGGER.
 	 */
 	private static final Logger LOGGER = LogManager.getLogger();
+	private static List<String> historico = new ArrayList<>();
 
 	/**
 	 * The constant GOODBYE_MESSAGE.
@@ -32,6 +35,7 @@ public class Tasks {
 	private static final String MAPA = "mapa";
 	private static final String STATUS = "estado";
 	private static final String SIMULA = "simula";
+	private static final String EXPORTPDF = "exportpdf";
 
 	/**
 	 * This task also tests the fighting element of a round of three shots
@@ -48,6 +52,10 @@ public class Tasks {
 		while (!command.equals(DESISTIR)) {
 
 			switch (command) {
+				case EXPORTPDF:
+					PDFGenerator pdf = new PDFGenerator();
+					pdf.gerarRelatorio(historico);
+					break;
 				case GERAFROTA:
 					myFleet = Fleet.createRandom();
 					game = new Game(myFleet);
@@ -68,14 +76,23 @@ public class Tasks {
 					break;
 				case RAJADA:
 					if (game != null) {
-						game.readEnemyFire(in);
+						// 1. Capturar as coordenadas que o utilizador vai escrever (ex: A1 B2 C3)
+						// Nota: Precisamos de ler os próximos 3 tokens do Scanner se a rajada for de 3
+						System.out.println("Introduza as coordenadas da rajada:");
+						String tiro1 = in.next();
+						String tiro2 = in.next();
+						String tiro3 = in.next();
+
+						// 2. Executar a lógica do jogo (podes precisar de adaptar como o jogo lê)
+						// Se o game.readEnemyFire() for rígido, podes passar os dados capturados
+						game.readEnemyFire(new Scanner(tiro1 + " " + tiro2 + " " + tiro3));
+
+						// 3. Adicionar os TIROS REAIS ao histórico para o PDF
+						historico.add("Rajada: " + tiro1 + ", " + tiro2 + ", " + tiro3);
+						historico.add("Resultado -> Acertos: " + game.getHits() + " | Restantes: " + game.getRemainingShips());
+
 						myFleet.printStatus();
 						game.printMyBoard(true, false);
-
-						if (game.getRemainingShips() == 0) {
-							game.over();
-							System.exit(0);
-						}
 					}
 					break;
 				case SIMULA:
@@ -101,9 +118,9 @@ public class Tasks {
 					if (game != null)
 						game.printMyBoard(true, true);
 					break;
-                case AJUDA:
-                    menuHelp();
-                    break;
+				case AJUDA:
+					menuHelp();
+					break;
 				default:
 					System.out.println("Que comando é esse??? Repete ...");
 			}
