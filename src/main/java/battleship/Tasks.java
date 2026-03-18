@@ -5,6 +5,8 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The type Tasks.
@@ -32,6 +34,7 @@ public class Tasks {
 	private static final String MAPA = "mapa";
 	private static final String STATUS = "estado";
 	private static final String SIMULA = "simula";
+	private static final String EXPORTPDF = "exportpdf";
 
 	/**
 	 * This task also tests the fighting element of a round of three shots
@@ -48,6 +51,10 @@ public class Tasks {
 		while (!command.equals(DESISTIR)) {
 
 			switch (command) {
+				case EXPORTPDF:
+    				PDFGenerator pdf = new PDFGenerator();
+    				pdf.gerarRelatorio(historico);
+    				break;
 				case GERAFROTA:
 					myFleet = Fleet.createRandom();
 					game = new Game(myFleet);
@@ -67,14 +74,15 @@ public class Tasks {
 						game.printMyBoard(false, true);
 					break;
 				case RAJADA:
-					if (game != null) {
-						game.readEnemyFire(in);
-						myFleet.printStatus();
-						game.printMyBoard(true, false);
+    				if (game != null) {
+        				game.readEnemyFire(in);
+        				historico.add("Rajada executada");
+       					 myFleet.printStatus();
+        				game.printMyBoard(true, false);
 
-						if (game.getRemainingShips() == 0) {
-							game.over();
-							System.exit(0);
+							if (game.getRemainingShips() == 0) {
+								game.over();
+								System.exit(0);
 						}
 					}
 					break;
