@@ -149,3 +149,12 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 **Maintained by:** [@britoeabreu](https://github.com/britoeabreu)  
 *Created for the Software Engineering students at ISCTE-IUL.*
+
+
+
+## Estratégia do LLM (Prompt Final)
+* Diário de Bordo: O LLM mantém um registo sequencial de cada rajada (coordenadas e resultados: Água, Navio atingido ou Afundado).
+* Validação de Tiros: Não disparar fora dos limites (A-J, 1-10) nem repetir coordenadas já testadas.
+* Tática de Perseguição: Se atingir um navio, o LLM dispara nas posições contíguas (Norte, Sul, Este, Oeste) na jogada seguinte para descobrir a orientação.
+* Regra de Proximidade: Como os navios não se tocam (nem nos cantos), as posições diagonais a um tiro certeiro são marcadas como água (exceto no corpo do Galeão).
+* Halo de Segurança: Quando um navio é afundado, todas as quadrículas adjacentes (halo de 1 posição) são marcadas como água intransitável
