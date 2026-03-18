@@ -78,13 +78,11 @@ public class Tasks {
 					break;
 				case RAJADA:
 					if (game != null) {
-						// 1. O cronómetro começa ANTES de pedires os dados
+
 						org.joda.time.DateTime inicio = new org.joda.time.DateTime();
 
 						System.out.println("Introduza as 3 coordenadas (ex: A1 B2 C3):");
 
-						// O programa vai "parar" aqui à espera que tu escrevas.
-						// É este tempo de espera que vai ser medido!
 						String t1 = in.next();
 						String t2 = in.next();
 						String t3 = in.next();
@@ -92,13 +90,10 @@ public class Tasks {
 						// 2. Executa a lógica do tiro
 						game.readEnemyFire(new java.util.Scanner(t1 + " " + t2 + " " + t3));
 
-						// 3. Para o cronómetro DEPOIS de teres escrito
 						org.joda.time.DateTime fim = new org.joda.time.DateTime();
 
-						// Usamos Seconds ou Minutes dependendo do tempo que demorares
 						int segundos = org.joda.time.Seconds.secondsBetween(inicio, fim).getSeconds();
 
-						// 4. Guardar no histórico para o PDF
 						String registo = "Rajada: [" + t1 + ", " + t2 + ", " + t3 + "] | Tempo de decisão: " + segundos + "s";
 						historico.add(registo);
 						historico.add("Resultado -> Acertos: " + game.getHits() + " | Restantes: " + game.getRemainingShips());
