@@ -17,16 +17,19 @@ public class BattleshipGUI extends Application {
     private static final int TAMANHO_GRELHA = 10;
     private static final int TAMANHO_CELULA = 30; // Tamanho de cada quadrado em pixeis
 
-    // 1. Variável para guardar o motor do jogo (Backend)
+    // Variável para guardar o motor do jogo (Backend)
     private Game motorDoJogo;
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Batalha Naval dos Descobrimentos");
 
-        // 2. Inicializar a lógica do jogo com uma frota aleatória ANTES de desenhar os tabuleiros
+        // Inicializar a lógica do jogo
         IFleet minhaFrota = Fleet.createRandom();
         motorDoJogo = new Game(minhaFrota);
+
+        // --> INICIALIZAR A BASE DE DADOS NO ARRANQUE
+        DatabaseManager.inicializarBaseDeDados();
 
         // Criar os dois tabuleiros
         GridPane meuMar = criarTabuleiro(true);
@@ -63,39 +66,42 @@ public class BattleshipGUI extends Application {
                 celula.setFill(Color.LIGHTBLUE); // Cor inicial da água
                 celula.setStroke(Color.GRAY); // Cor da borda
 
-                // 3. Desenhar a nossa própria frota no ecrã da esquerda
+                // Desenhar a nossa própria frota no ecrã da esquerda
                 if (isMeuMar) {
                     IPosition pos = new Position(linha, coluna);
-                    // Se houver um navio nesta coordenada, pinta de cinzento
                     if (motorDoJogo.getMyFleet().shipAt(pos) != null) {
                         celula.setFill(Color.DARKGRAY);
                     }
                 }
 
-                // 4. Lógica de clique no mar do adversário (ecrã da direita)
+                // Lógica de clique no mar do adversário (ecrã da direita)
                 if (!isMeuMar) {
                     final int l = linha;
                     final int c = coluna;
 
                     celula.setOnMouseClicked(event -> {
-                        // Converter linha e coluna numa posição do backend
                         IPosition pos = new Position(l, c);
-
-                        // Fazer o disparo usando o método real do Game.java!
                         IGame.ShotResult resultado = motorDoJogo.fireSingleShot(pos, false);
 
+                        // A variável tem de ser declarada AQUI, antes de a usarmos nos 'if'
+                        String textoResultado;
+
                         if (resultado.ship() != null) {
-                            // Acertou num navio! Pintar de vermelho
                             celula.setFill(Color.RED);
+                            textoResultado = "ACERTO";
                             if (resultado.sunk()) {
                                 System.out.println("BOOM! Afundaste um navio!");
+                                textoResultado = "AFUNDADO";
                             }
                         } else {
-                            // Tiro na água! Pintar de branco
                             celula.setFill(Color.WHITE);
+                            textoResultado = "AGUA";
                         }
 
-                        // Desativar o clique nesta célula para não atirares 2x no mesmo sítio
+                        // --> REGISTAR NA BASE DE DADOS
+                        DatabaseManager.registarJogada(l, c, textoResultado);
+
+                        // Desativar o clique nesta célula
                         celula.setDisable(true);
 
                         // Verificar condição de vitória
