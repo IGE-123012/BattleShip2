@@ -35,11 +35,12 @@ public class Tasks {
 	private static final String STATUS = "estado";
 	private static final String SIMULA = "simula";
     private static List<String> historico = new ArrayList<>();
-	/**
+
+
+    /**
 	 * This task also tests the fighting element of a round of three shots
 	 */
 	public static void menu() {
-
 
 		IFleet myFleet = null;
 		IGame game = null;

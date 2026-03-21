@@ -1,3 +1,34 @@
+# 📼 Youtube Video
+
+https://youtu.be/QaT_fuSsHKE
+
+# Final PROMPT (Gemini PRO)
+
+* Zero desperdício: Não repetirei tiros nem atirarei para fora do mapa (Z99 está fora de questão).
+
+* Caçada implacável: Ao atingir ferro e madeira, focarei os tiros seguintes nas posições contíguas (Norte, Sul, Este, Oeste) e ignorarei as diagonais para poupar munição, sabendo que as Naus, Caravelas e Fragatas são linhas retas. Manterei a exceção da diagonal apenas se suspeitar do temível Galeão.
+
+* Zona de exclusão: Navio ao fundo significa um "halo" de água intransitável (1 posição) demarcado imediatamente à sua volta. Nenhum tiro será desperdiçado nesse perímetro vazio.
+
+* Honra marítima: Serei um vencedor magnânimo e, se a minha frota for ao fundo, declararei a derrota com a elevação de um verdadeiro marinheiro.
+
+# 📖 Diário de Bordo - Frota IA 
+
+Rajada 1
+Tiro 1: E5 -> Resultado: Água 💧
+Tiro 2: C3 -> Resultado: Água 💧
+Tiro 3: H8 -> Resultado: Água 💧
+
+Rajada 2
+Tiro 1: A2 -> Resultado: Água 💧
+Tiro 2: D7 -> Resultado: Água 💧
+Tiro 3: I4 -> Resultado: Água 💧
+
+Rajada 3
+Tiro 1: B9 -> Resultado: A aguardar relatório... ⏳
+Tiro 2: G2 -> Resultado: A aguardar relatório... ⏳
+Tiro 3: J7 -> Resultado: A aguardar relatório... ⏳
+
 # ⚓ Battleship 2.0
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
@@ -149,3 +180,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 **Maintained by:** [@britoeabreu](https://github.com/britoeabreu)  
 *Created for the Software Engineering students at ISCTE-IUL.*
+
+
+
+
