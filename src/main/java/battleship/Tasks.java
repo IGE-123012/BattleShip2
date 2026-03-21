@@ -1,5 +1,7 @@
 package battleship;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,11 +34,12 @@ public class Tasks {
 	private static final String MAPA = "mapa";
 	private static final String STATUS = "estado";
 	private static final String SIMULA = "simula";
-
+    private static List<String> historico = new ArrayList<>();
 	/**
 	 * This task also tests the fighting element of a round of three shots
 	 */
 	public static void menu() {
+
 
 		IFleet myFleet = null;
 		IGame game = null;
@@ -66,18 +69,39 @@ public class Tasks {
 					if (myFleet != null)
 						game.printMyBoard(false, true);
 					break;
-				case RAJADA:
-					if (game != null) {
-						game.readEnemyFire(in);
-						myFleet.printStatus();
-						game.printMyBoard(true, false);
+                case RAJADA:
+                    if (game != null) {
 
-						if (game.getRemainingShips() == 0) {
-							game.over();
-							System.exit(0);
-						}
-					}
-					break;
+                        System.out.println("Introduza as 3 coordenadas (ex: A1 B2 C3):");
+
+                        org.joda.time.DateTime inicio = new org.joda.time.DateTime();
+
+                        String t1 = in.next();
+                        String t2 = in.next();
+                        String t3 = in.next();
+
+                        org.joda.time.DateTime fim = new org.joda.time.DateTime();
+                        int segundos = org.joda.time.Seconds.secondsBetween(inicio, fim).getSeconds();
+
+                        game.readEnemyFire(new java.util.Scanner(t1 + " " + t2 + " " + t3));
+
+                        int minutos = segundos / 60;
+                        int secsRestantes = segundos % 60;
+                        String tempoFormatado = String.format("%02d:%02d", minutos, secsRestantes);
+
+                        System.out.println();
+                        System.out.println("+---------------------------------+");
+                        System.out.println("|  Tempo de decisao: " + tempoFormatado + "        |");
+                        System.out.println("+---------------------------------+");
+
+                        String registo = "Rajada: [" + t1 + ", " + t2 + ", " + t3 + "] | Tempo: " + tempoFormatado;
+                        historico.add(registo);
+                        historico.add("Resultado -> Acertos: " + game.getHits() + " | Restantes: " + game.getRemainingShips());
+
+                        myFleet.printStatus();
+                        game.printMyBoard(true, false);
+                    }
+                    break;
 				case SIMULA:
 					if (game != null) {
 						while (game.getRemainingShips() > 0){
