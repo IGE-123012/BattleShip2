@@ -19,19 +19,19 @@ https://youtu.be/i7IAQZBD4vY
 # 📝 Diário de Bordo - Frota IA 
 
 Rajada 1
-Tiro 1: E5 -> Resultado: Água 💧
-Tiro 2: C3 -> Resultado: Água 💧
-Tiro 3: H8 -> Resultado: Água 💧
+* Tiro 1: E5 -> Resultado: Água 💧
+* Tiro 2: C3 -> Resultado: Água 💧
+* Tiro 3: H8 -> Resultado: Água 💧
 
 Rajada 2
-Tiro 1: A2 -> Resultado: Água 💧
-Tiro 2: D7 -> Resultado: Água 💧
-Tiro 3: I4 -> Resultado: Água 💧
+* Tiro 1: A2 -> Resultado: Água 💧
+* Tiro 2: D7 -> Resultado: Água 💧
+* Tiro 3: I4 -> Resultado: Água 💧
 
 Rajada 3
-Tiro 1: B9 -> Resultado: A aguardar relatório... ⏳
-Tiro 2: G2 -> Resultado: A aguardar relatório... ⏳
-Tiro 3: J7 -> Resultado: A aguardar relatório... ⏳
+* Tiro 1: B9 -> Resultado: A aguardar relatório... ⏳
+* Tiro 2: G2 -> Resultado: A aguardar relatório... ⏳
+* Tiro 3: J7 -> Resultado: A aguardar relatório... ⏳
 
 ---
 
