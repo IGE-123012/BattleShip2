@@ -2,6 +2,8 @@
 
 https://youtu.be/ZpwBvyuyj-E
 
+---
+
 # Final PROMPT (Gemini PRO)
 
 * Zero desperdício: Não repetirei tiros nem atirarei para fora do mapa (Z99 está fora de questão).
@@ -11,6 +13,8 @@ https://youtu.be/ZpwBvyuyj-E
 * Zona de exclusão: Navio ao fundo significa um "halo" de água intransitável (1 posição) demarcado imediatamente à sua volta. Nenhum tiro será desperdiçado nesse perímetro vazio.
 
 * Honra marítima: Serei um vencedor magnânimo e, se a minha frota for ao fundo, declararei a derrota com a elevação de um verdadeiro marinheiro.
+
+---
 
 # 📖 Diário de Bordo - Frota IA 
 
@@ -28,6 +32,8 @@ Rajada 3
 Tiro 1: B9 -> Resultado: A aguardar relatório... ⏳
 Tiro 2: G2 -> Resultado: A aguardar relatório... ⏳
 Tiro 3: J7 -> Resultado: A aguardar relatório... ⏳
+
+---
 
 # ⚓ Battleship 2.0
 
