@@ -4,7 +4,7 @@ https://youtu.be/ZpwBvyuyj-E
 
 ---
 
-# Final PROMPT (Gemini PRO)
+# 🤖 Final PROMPT (Gemini PRO)
 
 * Zero desperdício: Não repetirei tiros nem atirarei para fora do mapa (Z99 está fora de questão).
 
@@ -16,7 +16,7 @@ https://youtu.be/ZpwBvyuyj-E
 
 ---
 
-# 📖 Diário de Bordo - Frota IA 
+# 📝 Diário de Bordo - Frota IA 
 
 Rajada 1
 Tiro 1: E5 -> Resultado: Água 💧
