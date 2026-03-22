@@ -1,6 +1,6 @@
 # 📼 Youtube Video
 
-https://youtu.be/QaT_fuSsHKE
+https://youtu.be/ZpwBvyuyj-E
 
 # Final PROMPT (Gemini PRO)
 
