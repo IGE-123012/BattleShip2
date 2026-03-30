@@ -1,0 +1,31 @@
+# Número de Aluno: [O Teu Número] - Nome: [O Teu Nome]
+name: Qodana - Deteção de Long Method
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  qodana:
+    name: Qodana Quality Gate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      checks: write
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Necessário para uma análise completa do histórico
+
+      - name: Qodana Scan
+        uses: JetBrains/qodana-action@v2023.2
+        with:
+          # O argumento --fail-threshold 0 garante que o workflow falha (Quality Gate chumba)
+          # se o Qodana encontrar algum "Long Method"
+          args: --fail-threshold, 0
