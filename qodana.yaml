@@ -13,6 +13,10 @@ version: "1.0"
 profile:
   name: qodana.starter
 
+
+  include:
+    - name: MethodLength
+
 #Enable inspections
 #include:
 #  - name: <SomeEnabledInspectionId>
@@ -45,4 +49,4 @@ projectJDK: "25" #(Applied in CI/CD pipeline)
 #    total: 50
 
 #Specify Qodana linter for analysis (Applied in CI/CD pipeline)
-linter: jetbrains/qodana-jvm:2025.3
+linter: jetbrains/qodana-jvm-community:2025.3
