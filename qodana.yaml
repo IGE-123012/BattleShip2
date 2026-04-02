@@ -16,7 +16,8 @@ profile:
 
   include:
     - name: MethodLength
-
+    - name: OverlyComplexClass
+    - name: ClassComplexity
 #Enable inspections
 #include:
 #  - name: <SomeEnabledInspectionId>
