@@ -24,6 +24,9 @@ public class Game implements IGame
 	 */
 	public static void printBoard(IFleet fleet, List<IMove> moves, boolean show_shots, boolean showLegend) {
 
+        int variavelFantasma = 42;
+        // Passo B.6 Margarida
+
 		assert fleet != null;
 		assert moves != null;
 
