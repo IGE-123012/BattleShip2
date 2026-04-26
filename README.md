@@ -1,3 +1,8 @@
+## Integração Contínua (CI) e Testes
+Este projeto utiliza o **GitHub Actions** para garantir a qualidade do código. Sempre que é feito um envio (*push*) para o ramo principal (`main`) ou para os ramos de desenvolvimento (`UnitTests_*`), um *workflow* automatizado utiliza o Apache Maven para compilar o projeto e executar toda a bateria de testes unitários desenvolvidos em JUnit.
+
+---
+
 # 📼 Youtube Video
 
 https://youtu.be/i7IAQZBD4vY
