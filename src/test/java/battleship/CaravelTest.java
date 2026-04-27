@@ -1,124 +1,82 @@
-/**
- * Author: britoeabreu
- * Date: 2023-10-10
- * Time: 15:30
- *
- * Cyclomatic Complexity:
- * - Constructor: 5
- * - getSize: 1
- */
 package battleship;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import java.util.List;
 
-/**
- * Test class for the Caravel class.
- */
-@DisplayName("Tests for the Caravel class")
-class CaravelTest {
+@DisplayName("Testes Unitários para a Caravela (Tamanho 2)")
+public class CaravelTest {
 
-	static Caravel cN, cS, cE, cW;
+	private Caravel caravel;
 
-	@BeforeAll
-	static void setUpBeforeClass() {
-		cN = new Caravel(Compass.NORTH, new Position(5, 5));
-		cS = new Caravel(Compass.SOUTH, new Position(5, 5));
-		cE = new Caravel(Compass.EAST, new Position(5, 5));
-		cW = new Caravel(Compass.WEST, new Position(5, 5));
+	@BeforeEach
+	void setUp() {
+		caravel = new Caravel(Compass.NORTH, new Position(5, 5));
 	}
 
-	@AfterAll
-	static void tearDownAfterClass() {
-		cN = null;
-		cS = null;
-		cE = null;
-		cW = null;
+	@AfterEach
+	void tearDown() {
+		caravel = null;
 	}
 
-	/**
-	 * Test for the getSize method.
-	 * Cyclomatic Complexity: 1
-	 */
 	@Test
-	@DisplayName("Test for the getSize method")
-	void getSize() {
-		assertEquals(2, cN.getSize(), "Error: The size of the Caravel should be 2.");
+	@DisplayName("Garante que a Caravela a Norte é criada com 2 posições corretas")
+	void testConstructorNorth() {
+		List<IPosition> positions = caravel.getPositions();
+		assertNotNull(caravel, "Erro: A instância de Caravel não deve ser nula.");
+		assertEquals(2, positions.size(), "Erro: A Caravela a Norte deve ter 2 posições.");
+		assertEquals(new Position(5, 5), positions.get(0));
+		assertEquals(new Position(6, 5), positions.get(1));
 	}
 
-	/**
-	 * Test for the constructor with NORTH direction.
-	 * Cyclomatic Complexity: 5
-	 */
 	@Test
-	@DisplayName("Test for the constructor with NORTH direction")
-	void constructor1() {
-		assertNotNull(cN, "Error: The Caravel should not be null.");
-		assertEquals(Compass.NORTH, cN.getBearing(), "Error: The Caravel's direction should be NORTH.");
-		assertEquals(5, cN.getTopMostPos(), "Error: The topmost position should be 5.");
+	@DisplayName("Garante que a Caravela a Sul é criada com 2 posições corretas")
+	void testConstructorSouth() {
+		Caravel caravelSouth = new Caravel(Compass.SOUTH, new Position(5, 5));
+		List<IPosition> positions = caravelSouth.getPositions();
+		assertEquals(2, positions.size(), "Erro: A Caravela a Sul deve ter 2 posições.");
+		assertEquals(new Position(5, 5), positions.get(0));
+		assertEquals(new Position(6, 5), positions.get(1));
 	}
 
-	/**
-	 * Test for the constructor with SOUTH direction.
-	 */
 	@Test
-	@DisplayName("Test for the constructor with SOUTH direction")
-	void constructor2() {
-		assertNotNull(cS, "Error: The Caravel should not be null.");
-		assertEquals(Compass.SOUTH, cS.getBearing(), "Error: The Caravel's direction should be SOUTH.");
-		assertEquals(6, cS.getBottomMostPos(), "Error: The bottommost position should be 6.");
+	@DisplayName("Garante que a Caravela a Este é criada com 2 posições corretas")
+	void testConstructorEast() {
+		Caravel caravelEast = new Caravel(Compass.EAST, new Position(5, 5));
+		List<IPosition> positions = caravelEast.getPositions();
+		assertEquals(2, positions.size(), "Erro: A Caravela a Este deve ter 2 posições.");
+		assertEquals(new Position(5, 5), positions.get(0));
+		assertEquals(new Position(5, 6), positions.get(1));
 	}
 
-	/**
-	 * Test for the constructor with EAST direction.
-	 */
 	@Test
-	@DisplayName("Test for the constructor with EAST direction")
-	void constructor3() {
-		assertNotNull(cE, "Error: The Caravel should not be null.");
-		assertEquals(Compass.EAST, cE.getBearing(), "Error: The Caravel's direction should be EAST.");
-		assertEquals(6, cE.getRightMostPos(), "Error: The rightmost position should be 6.");
+	@DisplayName("Garante que a Caravela a Oeste é criada com 2 posições corretas")
+	void testConstructorWest() {
+		Caravel caravelWest = new Caravel(Compass.WEST, new Position(5, 5));
+		List<IPosition> positions = caravelWest.getPositions();
+		assertEquals(2, positions.size(), "Erro: A Caravela a Oeste deve ter 2 posições.");
+		assertEquals(new Position(5, 5), positions.get(0));
+		assertEquals(new Position(5, 6), positions.get(1));
 	}
 
-	/**
-	 * Test for the constructor with WEST direction.
-	 */
 	@Test
-	@DisplayName("Test for the constructor with WEST direction")
-	void constructor4() {
-		assertNotNull(cW, "Error: The Caravel should not be null.");
-		assertEquals(Compass.WEST, cW.getBearing(), "Error: The Caravel's direction should be WEST.");
-		assertEquals(5, cW.getLeftMostPos(), "Error: The leftmost position should be 5.");
+	@DisplayName("Verifica se a Caravela flutua quando acabada de criar")
+	void testStillFloating1() {
+		assertTrue(caravel.stillFloating(), "Erro: A Caravela deve flutuar inicialmente.");
 	}
 
-	/**
-	 * Test for the constructor with an invalid direction.
-	 */
 	@Test
-	@DisplayName("Test for the constructor with an invalid direction")
-	void constructor5() {
-		assertThrows(NullPointerException.class, () -> new Caravel(null, new Position(0, 0)),
-				"Error: An IllegalArgumentException should have been thrown for an invalid direction.");
+	@DisplayName("Garante que a Caravela afunda quando todas as posições são atingidas")
+	void testStillFloating2() {
+		caravel.getPositions().forEach(IPosition::shoot);
+		assertFalse(caravel.stillFloating(), "Erro: A Caravela deve afundar após os 2 tiros.");
 	}
 
-	/**
-	 * Test for the constructor with null values.
-	 */
 	@Test
-	@DisplayName("Test for the constructor with null values")
-	void constructorNullPointerException() {
-		Exception exception = assertThrows(NullPointerException.class, () ->
-				new Caravel(null, new Position(0, 0)), "Error: A NullPointerException should have been thrown for a null direction.");
-		assertEquals("Ship's bearing must not be null", exception.getMessage(),
-				"Error: The exception message does not match the expected value.");
-
-		Exception exception2 = assertThrows(NullPointerException.class, () ->
-				new Caravel(null, null), "Error: A NullPointerException should have been thrown for null direction and position.");
-		assertEquals("Ship's bearing must not be null", exception2.getMessage(),
-				"Error: The exception message does not match the expected value.");
+	@DisplayName("Lança exceção quando construída com dados nulos")
+	void testConstructorWithInvalidInput() {
+		assertThrows(NullPointerException.class, () -> new Caravel(null, null),
+				"Erro: Devia lançar NullPointerException para input nulo.");
 	}
 }
