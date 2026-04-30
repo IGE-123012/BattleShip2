@@ -41,8 +41,4 @@ public class Caravel extends Ship {
 		}
 	}
 
-	private void addVerticalPosition(IPosition pos) {
-		for (int r = 0; r < this.getSize(); r++)
-			getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
-	}
 }
