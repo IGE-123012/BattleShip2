@@ -27,12 +27,16 @@ public class Caravel extends Ship {
 				addVerticalPosition(pos);
 				break;
 			case EAST:
-				for (int c = 0; c < this.getSize(); c++)
-					getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
+				for (int c = 0; c < this.getSize(); c++) {
+					int column = pos.getColumn() + c;
+					getPositions().add(new Position(pos.getRow(), column));
+				}
 				break;
 			case WEST:
-				for (int c = 0; c < this.getSize(); c++)
-					getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
+				for (int c = 0; c < this.getSize(); c++) {
+					int column = pos.getColumn() + c;
+					getPositions().add(new Position(pos.getRow(), column));
+				}
 				break;
 		}
 	}
