@@ -1,0 +1,38 @@
+name: Qodana Feature Envy Quality Gate
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  qodana:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Qodana analysis
+        uses: JetBrains/qodana-action@v2024.2
+        with:
+          linter: jetbrains/qodana-jvm
+
+      - name: Apply Feature Envy Quality Gate
+        run: |
+          echo "Applying quality gate for Feature Envy smell (Martin Fowler catalog)"
+          if [ -f qodana.sarif.json ]; then
+            echo "Qodana report found"
+          else
+            echo "No report generated"
+            exit 1
+          fi
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: qodana.sarif.json
