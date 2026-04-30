@@ -10,7 +10,6 @@ public class DatabaseManagerTest {
     @Test
     void testInicializarBaseDeDados() {
 
-        // Executar método
         DatabaseManager.inicializarBaseDeDados();
 
         // Verificar se o ficheiro foi criado
