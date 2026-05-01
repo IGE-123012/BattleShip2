@@ -90,7 +90,7 @@ public class Fleet implements IFleet
 		assert s != null;
 
 		boolean result = false;
-		if ((ships.size() <= FLEET_SIZE) && (isInsideBoard(s)) && (!colisionRisk(s)))
+		if ((ships.size() <= FLEET_SIZE) && (isInsideBoard(s)) && (isSafe(s)))
 		{
 			ships.add(s);
 			result = true;
@@ -206,16 +206,16 @@ public class Fleet implements IFleet
 	 * @param s the s
 	 * @return the boolean
 	 */
-	private boolean colisionRisk(IShip s)
+	private boolean isSafe(IShip s)
     {
 		assert s != null;
 
 		for (int i = 0; i < ships.size(); i++)
 		{
 			if (ships.get(i).tooCloseTo(s))
-				return true;
+				return false;
 		}
-		return false;
+		return true;
     }
 
 	/**
