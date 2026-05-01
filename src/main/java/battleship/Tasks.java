@@ -13,7 +13,7 @@ import org.joda.time.Seconds;
 public class Tasks {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private static List<String> historico = new ArrayList<>();
+    private static final List<String> historico = new ArrayList<>();
 
     private static final String AJUDA = "ajuda";
     private static final String GERAFROTA = "gerafrota";
