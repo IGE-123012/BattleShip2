@@ -23,8 +23,8 @@ public class Carrack extends Ship {
 
 		switch (bearing) {
 			case SOUTH:
-				for (int r = 0; r < this.getSize(); r++)
-					getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
+				for (int row = 0; row < this.getSize(); row++)
+					getPositions().add(new Position(pos.getRow() + row, pos.getColumn()));
 				break;
 			case NORTH:
 				for (int r = 0; r < this.getSize(); r++)
