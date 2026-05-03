@@ -167,23 +167,26 @@ import java.util.ArrayList;
 			assertFalse((Boolean) method.invoke(fleet, outsideShip), "Error: Ship outside the board should return false.");
 		}
 
-		/**
-		 * Test for private method colisionRisk.
-		 * Cyclomatic Complexity: 2
-		 */
-		@Test
-		void testColisionRisk() throws Exception {
-			var method = Fleet.class.getDeclaredMethod("colisionRisk", IShip.class);
-			method.setAccessible(true);
+	/**
+	 * Test for private method isSafe (formerly colisionRisk).
+	 * Cyclomatic Complexity: 2
+	 */
+	@Test
+	void testIsSafe() throws Exception {
+		var method = Fleet.class.getDeclaredMethod("isSafe", IShip.class);
+		method.setAccessible(true);
 
-			IShip ship1 = new Barge(Compass.NORTH, new Position(1, 1));
-			IShip ship2 = new Barge(Compass.NORTH, new Position(1, 1));  // Overlapping position
-			fleet.addShip(ship1);
+		IShip ship1 = new Barge(Compass.NORTH, new Position(1, 1));
+		IShip ship2 = new Barge(Compass.NORTH, new Position(1, 1));  // Overlapping position
+		fleet.addShip(ship1);
 
-			assertTrue((Boolean) method.invoke(fleet, ship2), "Error: Overlapping ships should be at collision risk.");
-			assertFalse((Boolean) method.invoke(fleet, new Barge(Compass.NORTH, new Position(5, 5))),
-					"Error: Ships at non-overlapping positions should not have a collision risk.");
-		}
+		// Agora, navios sobrepostos NÃO SÃO SEGUROS (devolve false)
+		assertFalse((Boolean) method.invoke(fleet, ship2), "Error: Overlapping ships should not be safe (return false).");
+
+		// Navios longe uns dos outros SÃO SEGUROS (devolve true)
+		assertTrue((Boolean) method.invoke(fleet, new Barge(Compass.NORTH, new Position(5, 5))),
+				"Error: Ships at non-overlapping positions should be safe (return true).");
+	}
 
 		/**
 		 * Test for the printStatus method.
