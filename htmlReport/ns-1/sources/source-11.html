@@ -48,34 +48,34 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">PDFGenerator</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/1)
+    (1/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/2)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/2)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    93,3%
   </span>
   <span class="absValue">
-    (0/15)
+    (14/15)
   </span>
 </td>
 </tr>
@@ -99,7 +99,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.io.FileNotFoundException;
 &nbsp;import java.util.List;
 &nbsp;
-<b class="nc">&nbsp;public class PDFGenerator {</b>
+<b class="fc">&nbsp;public class PDFGenerator {</b>
 &nbsp;
 &nbsp;    private static final String FILE_PATH = &quot;data/historico_jogadas.pdf&quot;;
 &nbsp;
@@ -110,29 +110,29 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public void gerarRelatorio(List&lt;String&gt; jogadas) {
 &nbsp;        try {
 &nbsp;            // 1. Configurar o escritor e o documento PDF
-<b class="nc">&nbsp;            PdfWriter writer = new PdfWriter(FILE_PATH);</b>
-<b class="nc">&nbsp;            PdfDocument pdf = new PdfDocument(writer);</b>
-<b class="nc">&nbsp;            Document document = new Document(pdf);</b>
+<b class="fc">&nbsp;            PdfWriter writer = new PdfWriter(FILE_PATH);</b>
+<b class="fc">&nbsp;            PdfDocument pdf = new PdfDocument(writer);</b>
+<b class="fc">&nbsp;            Document document = new Document(pdf);</b>
 &nbsp;
 &nbsp;            // 2. Adicionar cabeçalho
-<b class="nc">&nbsp;            document.add(new Paragraph(&quot;Relatório de Jogadas - Battleship2&quot;)</b>
-<b class="nc">&nbsp;                    .setBold()</b>
-<b class="nc">&nbsp;                    .setFontSize(18));</b>
-<b class="nc">&nbsp;            document.add(new Paragraph(&quot;Histórico detalhado dos tiros realizados:&quot;));</b>
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;Relatório de Jogadas - Battleship2&quot;)</b>
+<b class="fc">&nbsp;                    .setBold()</b>
+<b class="fc">&nbsp;                    .setFontSize(18));</b>
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;Histórico detalhado dos tiros realizados:&quot;));</b>
 &nbsp;
 &nbsp;            // 3. Criar uma tabela para as jogadas
-<b class="nc">&nbsp;            Table table = new Table(1); // 1 coluna</b>
-<b class="nc">&nbsp;            table.addHeaderCell(&quot;Detalhe do Tiro&quot;);</b>
+<b class="fc">&nbsp;            Table table = new Table(1); // 1 coluna</b>
+<b class="fc">&nbsp;            table.addHeaderCell(&quot;Detalhe do Tiro&quot;);</b>
 &nbsp;
-<b class="nc">&nbsp;            for (String jogada : jogadas) {</b>
-<b class="nc">&nbsp;                table.addCell(jogada);</b>
+<b class="fc">&nbsp;            for (String jogada : jogadas) {</b>
+<b class="fc">&nbsp;                table.addCell(jogada);</b>
 &nbsp;            }
 &nbsp;
-<b class="nc">&nbsp;            document.add(table);</b>
+<b class="fc">&nbsp;            document.add(table);</b>
 &nbsp;
 &nbsp;            // 4. Fechar o documento
 &nbsp;            document.close();
-<b class="nc">&nbsp;            System.out.println(&quot;PDF gerado com sucesso em: &quot; + FILE_PATH);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;PDF gerado com sucesso em: &quot; + FILE_PATH);</b>
 &nbsp;
 &nbsp;        } catch (FileNotFoundException e) {
 <b class="nc">&nbsp;            System.err.println(&quot;Erro ao criar o ficheiro PDF: &quot; + e.getMessage());</b>
@@ -162,7 +162,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-04-15 16:01</div>
+    <div style="float:right;">generated on 2026-05-03 17:50</div>
 </div>
 </body>
 </html>

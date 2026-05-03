@@ -48,34 +48,34 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">Messages</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/1)
+    (1/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    75%
   </span>
   <span class="absValue">
-    (0/4)
+    (3/4)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/2)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    92,9%
   </span>
   <span class="absValue">
-    (0/14)
+    (13/14)
   </span>
 </td>
 </tr>
@@ -99,36 +99,36 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private static ResourceBundle bundle;
 &nbsp;
 &nbsp;    public static void escolherIdioma(Scanner in) {
-<b class="nc">&nbsp;        System.out.println(&quot;Escolha o idioma / Choose a language / Elija el idioma:&quot;);</b>
-<b class="nc">&nbsp;        System.out.println(&quot;1 - Português&quot;);</b>
-<b class="nc">&nbsp;        System.out.println(&quot;2 - English&quot;);</b>
-<b class="nc">&nbsp;        System.out.println(&quot;3 - Español&quot;);</b>
-<b class="nc">&nbsp;        System.out.print(&quot;&gt; &quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;Escolha o idioma / Choose a language / Elija el idioma:&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;1 - Português&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;2 - English&quot;);</b>
+<b class="fc">&nbsp;        System.out.println(&quot;3 - Español&quot;);</b>
+<b class="fc">&nbsp;        System.out.print(&quot;&gt; &quot;);</b>
 &nbsp;
-<b class="nc">&nbsp;        String opcao = in.next();</b>
+<b class="fc">&nbsp;        String opcao = in.next();</b>
 &nbsp;        Locale locale;
 &nbsp;
-<b class="nc">&nbsp;        switch (opcao) {</b>
+<b class="fc">&nbsp;        switch (opcao) {</b>
 &nbsp;            case &quot;2&quot;:
-<b class="nc">&nbsp;                locale = new Locale(&quot;en&quot;);</b>
+<b class="fc">&nbsp;                locale = new Locale(&quot;en&quot;);</b>
 &nbsp;                break;
 &nbsp;            case &quot;3&quot;:
-<b class="nc">&nbsp;                locale = new Locale(&quot;es&quot;);</b>
+<b class="fc">&nbsp;                locale = new Locale(&quot;es&quot;);</b>
 &nbsp;                break;
 &nbsp;            default:
-<b class="nc">&nbsp;                locale = new Locale(&quot;pt&quot;);</b>
+<b class="fc">&nbsp;                locale = new Locale(&quot;pt&quot;);</b>
 &nbsp;                break;
 &nbsp;        }
 &nbsp;
-<b class="nc">&nbsp;        bundle = ResourceBundle.getBundle(&quot;messages&quot;, locale);</b>
+<b class="fc">&nbsp;        bundle = ResourceBundle.getBundle(&quot;messages&quot;, locale);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public static String get(String key) {
-<b class="nc">&nbsp;        return bundle.getString(key);</b>
+<b class="fc">&nbsp;        return bundle.getString(key);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public static String get(String key, Object... args) {
-<b class="nc">&nbsp;        return MessageFormat.format(bundle.getString(key), args);</b>
+<b class="fc">&nbsp;        return MessageFormat.format(bundle.getString(key), args);</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -154,7 +154,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-04-15 16:01</div>
+    <div style="float:right;">generated on 2026-05-03 17:50</div>
 </div>
 </body>
 </html>
