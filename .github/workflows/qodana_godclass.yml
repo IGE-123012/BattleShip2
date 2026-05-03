@@ -1,0 +1,27 @@
+# Número de Aluno: 122973 - Nome: Margarida Barqueta
+# Workflow criado para detetar a presença do Code Smell "God Class"
+name: Qodana Code Quality (God Class Gate)
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  qodana:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Qodana - Analyze and Check God Class metrics
+        uses: JetBrains/qodana-action@v2023.2
+        with:
+          # Define o limite de problemas aceites no Quality Gate
+          # Se o Qodana encontrar erros de complexidade/God Class acima deste limite, o workflow falha.
+          fail-threshold: 0
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
