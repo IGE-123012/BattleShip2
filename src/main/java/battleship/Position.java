@@ -31,6 +31,19 @@ public class Position implements IPosition {
 	 */
 	private boolean isHit;
 
+    // Define possible directions (up, right, down, left)
+    private static final int[][] directions = {
+            {-1, 0},  // north
+            {0, 1},   // east
+            {1, 0},   // south
+            {0, -1},   // west
+            {1, 1},   // northeast
+            {1, -1},  // northwest
+            {-1, 1},  // southeast
+            {-1, -1} // southwest
+    };
+
+
 	//------------------------------------------------------------------
 	public static Position randomPosition() {
 		// Generate random position on the board
@@ -139,17 +152,6 @@ public class Position implements IPosition {
 		int row = this.getRow();
 		int col = this.getColumn();
 
-		// Define possible directions (up, right, down, left)
-		int[][] directions = {
-				{-1, 0},  // north
-				{0, 1},   // east
-				{1, 0},   // south
-				{0, -1},   // west
-				{1, 1},   // northeast
-				{1, -1},  // northwest
-				{-1, 1},  // southeast
-				{-1, -1} // southwest
-		};
 
 		// Check each possible direction
 		for (int[] dir : directions) {
