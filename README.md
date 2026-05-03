@@ -1,8 +1,17 @@
+## Integração Contínua (CI) e Testes
+Este projeto utiliza o **GitHub Actions** para garantir a qualidade do código. Sempre que é feito um envio (*push*) para o ramo principal (`main`) ou para os ramos de desenvolvimento (`UnitTests_*`), um *workflow* automatizado utiliza o Apache Maven para compilar o projeto e executar toda a bateria de testes unitários desenvolvidos em JUnit.
+
+[![Java CI with Maven](https://github.com/IGE-123012/BattleShip2/actions/workflows/BuildTest.yml/badge.svg)](https://github.com/IGE-123012/BattleShip2/actions/workflows/BuildTest.yml)
+
+---
+
 # 📼 Youtube Video
 
-https://youtu.be/QaT_fuSsHKE
+https://youtu.be/i7IAQZBD4vY
 
-# Final PROMPT (Gemini PRO)
+---
+
+# 🤖 Final PROMPT (Gemini PRO)
 
 * Zero desperdício: Não repetirei tiros nem atirarei para fora do mapa (Z99 está fora de questão).
 
@@ -12,22 +21,26 @@ https://youtu.be/QaT_fuSsHKE
 
 * Honra marítima: Serei um vencedor magnânimo e, se a minha frota for ao fundo, declararei a derrota com a elevação de um verdadeiro marinheiro.
 
-# 📖 Diário de Bordo - Frota IA 
+---
+
+# 📝 Diário de Bordo - Frota IA 
 
 Rajada 1
-Tiro 1: E5 -> Resultado: Água 💧
-Tiro 2: C3 -> Resultado: Água 💧
-Tiro 3: H8 -> Resultado: Água 💧
+* Tiro 1: E5 -> Resultado: Água 💧
+* Tiro 2: C3 -> Resultado: Água 💧
+* Tiro 3: H8 -> Resultado: Água 💧
 
 Rajada 2
-Tiro 1: A2 -> Resultado: Água 💧
-Tiro 2: D7 -> Resultado: Água 💧
-Tiro 3: I4 -> Resultado: Água 💧
+* Tiro 1: A2 -> Resultado: Água 💧
+* Tiro 2: D7 -> Resultado: Água 💧
+* Tiro 3: I4 -> Resultado: Água 💧
 
 Rajada 3
-Tiro 1: B9 -> Resultado: A aguardar relatório... ⏳
-Tiro 2: G2 -> Resultado: A aguardar relatório... ⏳
-Tiro 3: J7 -> Resultado: A aguardar relatório... ⏳
+* Tiro 1: B9 -> Resultado: A aguardar relatório... ⏳
+* Tiro 2: G2 -> Resultado: A aguardar relatório... ⏳
+* Tiro 3: J7 -> Resultado: A aguardar relatório... ⏳
+
+---
 
 # ⚓ Battleship 2.0
 

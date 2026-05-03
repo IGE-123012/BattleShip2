@@ -1,0 +1,168 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PDFGenerator</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">battleship</a>
+</div>
+
+<h1>Coverage Summary for Class: PDFGenerator (battleship)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PDFGenerator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    93,3%
+  </span>
+  <span class="absValue">
+    (14/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package battleship;
+&nbsp;
+&nbsp;
+&nbsp;import com.itextpdf.kernel.pdf.PdfDocument;
+&nbsp;import com.itextpdf.kernel.pdf.PdfWriter;
+&nbsp;import com.itextpdf.layout.Document;
+&nbsp;import com.itextpdf.layout.element.Paragraph;
+&nbsp;import com.itextpdf.layout.element.Table;
+&nbsp;
+&nbsp;import java.io.FileNotFoundException;
+&nbsp;import java.util.List;
+&nbsp;
+<b class="fc">&nbsp;public class PDFGenerator {</b>
+&nbsp;
+&nbsp;    private static final String FILE_PATH = &quot;data/historico_jogadas.pdf&quot;;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Recebe a lista de jogadas e gera um ficheiro PDF.
+&nbsp;     * @param jogadas Lista de Strings ou objetos que representam os tiros.
+&nbsp;     */
+&nbsp;    public void gerarRelatorio(List&lt;String&gt; jogadas) {
+&nbsp;        try {
+&nbsp;            // 1. Configurar o escritor e o documento PDF
+<b class="fc">&nbsp;            PdfWriter writer = new PdfWriter(FILE_PATH);</b>
+<b class="fc">&nbsp;            PdfDocument pdf = new PdfDocument(writer);</b>
+<b class="fc">&nbsp;            Document document = new Document(pdf);</b>
+&nbsp;
+&nbsp;            // 2. Adicionar cabeçalho
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;Relatório de Jogadas - Battleship2&quot;)</b>
+<b class="fc">&nbsp;                    .setBold()</b>
+<b class="fc">&nbsp;                    .setFontSize(18));</b>
+<b class="fc">&nbsp;            document.add(new Paragraph(&quot;Histórico detalhado dos tiros realizados:&quot;));</b>
+&nbsp;
+&nbsp;            // 3. Criar uma tabela para as jogadas
+<b class="fc">&nbsp;            Table table = new Table(1); // 1 coluna</b>
+<b class="fc">&nbsp;            table.addHeaderCell(&quot;Detalhe do Tiro&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;            for (String jogada : jogadas) {</b>
+<b class="fc">&nbsp;                table.addCell(jogada);</b>
+&nbsp;            }
+&nbsp;
+<b class="fc">&nbsp;            document.add(table);</b>
+&nbsp;
+&nbsp;            // 4. Fechar o documento
+&nbsp;            document.close();
+<b class="fc">&nbsp;            System.out.println(&quot;PDF gerado com sucesso em: &quot; + FILE_PATH);</b>
+&nbsp;
+&nbsp;        } catch (FileNotFoundException e) {
+<b class="nc">&nbsp;            System.err.println(&quot;Erro ao criar o ficheiro PDF: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-05-03 17:51</div>
+</div>
+</body>
+</html>
