@@ -95,9 +95,9 @@ public class FleetTest {
 
         assertEquals(1, randomFleet.getShipsLike("Galeao").size(), "Deve haver 1 galeão.");
         assertEquals(1, randomFleet.getShipsLike("Fragata").size(), "Deve haver 1 fragata.");
-        assertEquals(2, randomFleet.getShipsLike("Nau").size(),     "Devem haver 2 naus.");
-        assertEquals(3, randomFleet.getShipsLike("Caravela").size(),"Devem haver 3 caravelas.");
-        assertEquals(4, randomFleet.getShipsLike("Barca").size(),   "Devem haver 4 barcas.");
+        assertEquals(2, randomFleet.getShipsLike("Nau").size(), "Devem haver 2 naus.");
+        assertEquals(3, randomFleet.getShipsLike("Caravela").size(), "Devem haver 3 caravelas.");
+        assertEquals(4, randomFleet.getShipsLike("Barca").size(), "Devem haver 4 barcas.");
     }
 
     // -------------------------------------------------------------------------
@@ -198,7 +198,7 @@ public class FleetTest {
      */
     @Test
     void testGetShipsLike_matchingCategory() {
-        fleet.addShip(new Barge(Compass.NORTH,   new Position(1, 1)));
+        fleet.addShip(new Barge(Compass.NORTH, new Position(1, 1)));
         fleet.addShip(new Caravel(Compass.NORTH, new Position(4, 4)));
 
         List<IShip> barges = fleet.getShipsLike("Barca");
@@ -237,7 +237,7 @@ public class FleetTest {
      */
     @Test
     void testGetFloatingShips_allFloating() {
-        fleet.addShip(new Barge(Compass.NORTH,   new Position(1, 1)));
+        fleet.addShip(new Barge(Compass.NORTH, new Position(1, 1)));
         fleet.addShip(new Caravel(Compass.NORTH, new Position(4, 4)));
 
         assertEquals(2, fleet.getFloatingShips().size());
@@ -248,7 +248,7 @@ public class FleetTest {
      */
     @Test
     void testGetFloatingShips_afterSinkingOne() {
-        IShip ship1 = new Barge(Compass.NORTH,   new Position(1, 1));
+        IShip ship1 = new Barge(Compass.NORTH, new Position(1, 1));
         IShip ship2 = new Caravel(Compass.NORTH, new Position(4, 4));
         fleet.addShip(ship1);
         fleet.addShip(ship2);
@@ -315,7 +315,7 @@ public class FleetTest {
      */
     @Test
     void testSunkAndFloatingAreComplementary() {
-        IShip ship1 = new Barge(Compass.NORTH,   new Position(1, 1));
+        IShip ship1 = new Barge(Compass.NORTH, new Position(1, 1));
         IShip ship2 = new Caravel(Compass.NORTH, new Position(4, 4));
         fleet.addShip(ship1);
         fleet.addShip(ship2);
