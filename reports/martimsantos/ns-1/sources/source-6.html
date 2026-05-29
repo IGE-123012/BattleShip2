@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DatabaseManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">battleship</a>
+</div>
+
+<h1>Coverage Summary for Class: DatabaseManager (battleship)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DatabaseManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66,7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (12/15)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package battleship;
+&nbsp;
+&nbsp;import java.sql.Connection;
+&nbsp;import java.sql.DriverManager;
+&nbsp;import java.sql.PreparedStatement;
+&nbsp;import java.sql.Statement;
+&nbsp;
+<b class="nc">&nbsp;public class DatabaseManager {</b>
+&nbsp;
+&nbsp;    // O nome do ficheiro da base de dados que será criado na pasta do projeto
+&nbsp;    private static final String URL = &quot;jdbc:sqlite:historico_batalha.db&quot;;
+&nbsp;
+&nbsp;    // Método para criar a tabela no início do jogo
+&nbsp;    public static void inicializarBaseDeDados() {
+<b class="fc">&nbsp;        try (Connection conn = DriverManager.getConnection(URL);</b>
+<b class="fc">&nbsp;             Statement stmt = conn.createStatement()) {</b>
+&nbsp;
+&nbsp;            // Código SQL para criar a tabela
+<b class="fc">&nbsp;            String sql = &quot;CREATE TABLE IF NOT EXISTS jogadas (&quot; +</b>
+&nbsp;                    &quot;id INTEGER PRIMARY KEY AUTOINCREMENT,&quot; +
+&nbsp;                    &quot;linha INTEGER,&quot; +
+&nbsp;                    &quot;coluna INTEGER,&quot; +
+&nbsp;                    &quot;resultado TEXT,&quot; +
+&nbsp;                    &quot;data_hora DATETIME DEFAULT CURRENT_TIMESTAMP)&quot;;
+&nbsp;
+<b class="fc">&nbsp;            stmt.execute(sql);</b>
+<b class="fc">&nbsp;            System.out.println(&quot;Base de dados inicializada com sucesso!&quot;);</b>
+&nbsp;
+&nbsp;        } catch (Exception e) {
+<b class="nc">&nbsp;            System.out.println(&quot;Erro ao inicializar Base de Dados: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    // Método para guardar cada tiro
+&nbsp;    public static void registarJogada(int linha, int coluna, String resultado) {
+<b class="fc">&nbsp;        String sql = &quot;INSERT INTO jogadas(linha, coluna, resultado) VALUES(?,?,?)&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        try (Connection conn = DriverManager.getConnection(URL);</b>
+<b class="fc">&nbsp;             PreparedStatement pstmt = conn.prepareStatement(sql)) {</b>
+&nbsp;
+&nbsp;            // Substituir os &#39;?&#39; pelos valores reais
+<b class="fc">&nbsp;            pstmt.setInt(1, linha);</b>
+<b class="fc">&nbsp;            pstmt.setInt(2, coluna);</b>
+<b class="fc">&nbsp;            pstmt.setString(3, resultado);</b>
+&nbsp;
+<b class="fc">&nbsp;            pstmt.executeUpdate();</b>
+&nbsp;
+&nbsp;        } catch (Exception e) {
+<b class="nc">&nbsp;            System.out.println(&quot;Erro ao guardar jogada na BD: &quot; + e.getMessage());</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-05-03 17:51</div>
+</div>
+</body>
+</html>

@@ -87,6 +87,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp; */
 &nbsp;public class Barge extends Ship {
 &nbsp;
+&nbsp;	public static final String BARCA = &quot;Barca&quot;;
+&nbsp;
 &nbsp;	/**
 &nbsp;	 * Instantiates a new Barge.
 &nbsp;	 *
@@ -94,7 +96,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	 * @param pos     The upper-left position of the barge on the game board.
 &nbsp;	 */
 &nbsp;	public Barge(Compass bearing, IPosition pos) {
-<b class="fc">&nbsp;		super(&quot;Barca&quot;, bearing, pos, 1);</b>
+<b class="fc">&nbsp;		super(BARCA, bearing, pos, 1);</b>
 &nbsp;
 &nbsp;		// Add the single position of the barge to the list of positions
 <b class="fc">&nbsp;		getPositions().add(new Position(pos.getRow(), pos.getColumn()));</b>
@@ -123,7 +125,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-04-15 16:01</div>
+    <div style="float:right;">generated on 2026-05-03 17:50</div>
 </div>
 </body>
 </html>
