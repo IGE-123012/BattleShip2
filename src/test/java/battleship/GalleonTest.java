@@ -1,5 +1,7 @@
 package battleship;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +21,7 @@ import java.util.List;
  * - getLeftMostPos: 2
  * - getRightMostPos: 2
  */
+@DisplayName("Testes Unitários para o Galeão (Tamanho 5)")
 public class GalleonTest {
 
 	private Galleon galleon;
@@ -38,6 +41,7 @@ public class GalleonTest {
 	 * Cyclomatic Complexity: 5
 	 */
 	@Test
+	@DisplayName("Garante que o construtor cria o Galeão corretamente virado a Norte")
 	void testConstructorNorth() {
 		List<IPosition> positions = galleon.getPositions();
 		assertNotNull(galleon, "Error: Galleon instance should not be null.");
@@ -70,6 +74,7 @@ public class GalleonTest {
 	 * Cyclomatic Complexity: 2
 	 */
 	@Test
+	@DisplayName("Verifica se o Galeão flutua quando acabado de criar")
 	void testStillFloating1() {
 		assertTrue(galleon.stillFloating(), "Error: Galleon should initially be floating.");
 	}

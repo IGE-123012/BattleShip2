@@ -1,0 +1,11 @@
+{
+  "name": "Batalha Naval Dev Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "jetbrains": {
+      "backend": "IntelliJ"
+    }
+  }
+}
