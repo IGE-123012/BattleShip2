@@ -1,42 +1,61 @@
-name: Monitorização e Pipeline Completa de CI/CD
+name: CI/CD Pipeline Batalha Naval
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  pipeline:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Permissão necessária para o bot atualizar o GitHub Pages
 
     steps:
-      # 1. Fazer checkout do código
-      - name: Fazer checkout do código
+      - name: 1. Fazer checkout do código
         uses: actions/checkout@v4
 
-      # 2. Configurar o Ambiente Java
-      - name: Configurar JDK 21
+      - name: 2. Configurar o Java 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
 
-      # 3. Compilar e Executar os testes unitários (Ignorando falhas para não bloquear o Docker)
-      - name: Compilar o projeto e Testar
-        run: mvn clean package -DskipTests
+      - name: 3. Verificar dependências
+        run: mvn dependency:resolve
 
-      # 4. Fazer Login no Docker Hub
-      - name: Login no Docker Hub
+      - name: 4. Compilar o projeto
+        run: mvn clean compile
+
+      - name: 5. Executar os testes unitários
+        run: mvn test
+
+      - name: 6. Validar a qualidade no SonarQube Cloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CHAVE_DO_VOSSO_PROJETO_NO_SONAR
+
+      - name: 7. Login no Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 5. Construir a imagem Docker e Publicar no Docker Hub
-      - name: Construir e Publicar a imagem Docker
+      - name: 8. Construir e Publicar imagem Docker
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
           push: true
-          tags: mcfvs/battleship-game:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/battleship-game:latest
+
+      - name: 9. Atualizar a documentação (Maven Site e Javadoc)
+        run: |
+          mvn site
+          mvn javadoc:javadoc
+
+      - name: 10. Atualizar a documentação no GitHub Pages
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: Atualiza relatórios e Javadoc automaticamente"
+          file_pattern: 'docs/'
