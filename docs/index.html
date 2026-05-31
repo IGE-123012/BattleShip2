@@ -1,365 +1,431 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battleship 2.0 - Projeto Iscte</title>
-
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({startOnLoad:true});</script>
-
+    <title>Battleship 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #0f172a; /* Azul Marinho Escuro */
-            --secondary-color: #3b82f6; /* Azul Oceano */
-            --bg-color: #f8fafc;
-            --text-color: #334155;
-            --card-bg: #ffffff;
-            --border-radius: 8px;
+            --navy: #0a1628;
+            --navy-mid: #112240;
+            --navy-light: #1d3461;
+            --teal: #00b4d8;
+            --teal-light: #90e0ef;
+            --gold: #e9c46a;
+            --green: #2dc653;
+            --red: #e63946;
+            --amber: #f4a261;
+            --text: #ccd6f6;
+            --text-muted: #8892b0;
+            --border: rgba(0,180,216,0.2);
         }
-
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 16px;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
+        /* Nav */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(10,22,40,0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 60px;
         }
+        .nav-brand { font-size: 18px; font-weight: 700; color: var(--teal); letter-spacing: -0.5px; }
+        .nav-brand span { color: var(--gold); }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--teal); }
 
-        h1, h2, h3 {
-            color: var(--primary-color);
-            margin-top: 2rem;
+        /* Hero */
+        .hero {
+            min-height: 420px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
         }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0,180,216,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-anchor { font-size: 13px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1.25rem; }
+        .hero h1 span { color: var(--teal); }
+        .hero p { font-size: 18px; color: var(--text-muted); max-width: 560px; margin-bottom: 2rem; }
+        .badges { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 2rem; }
+        .badges img { height: 22px; border-radius: 4px; }
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--teal); color: var(--navy); }
+        .btn-primary:hover { background: var(--teal-light); }
+        .btn-outline { background: transparent; color: var(--teal); border: 1px solid var(--teal); }
+        .btn-outline:hover { background: rgba(0,180,216,0.1); }
 
-        h1 {
-            font-size: 2.5rem;
-            border-bottom: 3px solid var(--secondary-color);
-            padding-bottom: 0.5rem;
-            display: inline-block;
-        }
+        /* Layout */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 4rem 0; border-top: 1px solid var(--border); }
 
         h2 {
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 0.5rem;
+            font-size: 1.75rem; font-weight: 700; letter-spacing: -0.5px;
+            color: #e2e8f0; margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 10px;
         }
+        h2 .icon { font-size: 1.4rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; color: var(--teal-light); margin: 1.5rem 0 0.75rem; }
+        p { color: var(--text-muted); margin-bottom: 1rem; }
+        a { color: var(--teal); }
 
-        /* Cartões e Blocos */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
+        /* CI Badge section */
+        .ci-banner {
+            background: var(--navy-mid);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .ci-banner p { margin: 0; font-size: 14px; color: var(--text-muted); flex: 1; min-width: 200px; }
+
+        /* Video */
+        .video-card {
+            background: var(--navy-mid);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 16px;
         }
+        .video-icon { font-size: 2.5rem; }
+        .video-card a { font-weight: 600; font-size: 15px; }
+        .video-card p { margin: 0; font-size: 13px; }
 
-        blockquote {
-            border-left: 4px solid var(--secondary-color);
-            background: #eff6ff;
-            margin: 1.5rem 0;
-            padding: 1rem 1.5rem;
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            font-style: italic;
-            color: #1e3a8a;
+        /* Features table */
+        .features-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+        .features-table th {
+            text-align: left; font-size: 12px; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; color: var(--text-muted);
+            border-bottom: 1px solid var(--border); padding: 10px 12px;
         }
+        .features-table td { padding: 12px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 14px; color: var(--text-muted); vertical-align: middle; }
+        .features-table td:first-child { color: var(--text); font-weight: 500; }
+        .status { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; font-size: 13px; }
+        .status-done { background: rgba(45,198,83,0.15); }
+        .status-wip  { background: rgba(244,162,97,0.15); }
+        .status-no   { background: rgba(230,57,70,0.15); }
 
-        .tip-block {
-            border-left-color: #10b981;
-            background: #ecfdf5;
-            color: #065f46;
-            font-style: normal;
+        /* Stack pills */
+        .stack { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 0.5rem; }
+        .pill {
+            background: var(--navy-mid); border: 1px solid var(--border);
+            border-radius: 99px; padding: 5px 14px;
+            font-size: 13px; font-weight: 500; color: var(--teal-light);
+            display: flex; align-items: center; gap: 6px;
         }
+        .pill span { color: var(--text-muted); font-weight: 400; }
 
-        /* Código */
+        /* Code blocks */
         pre {
-            background: #1e293b;
-            color: #f8fafc;
-            padding: 1rem;
-            border-radius: var(--border-radius);
+            background: #0d1b2e;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
             overflow-x: auto;
-            font-family: 'Courier New', Courier, monospace;
+            margin: 1rem 0;
         }
-
         code {
-            background: #e2e8f0;
-            color: #b91c1c;
-            padding: 0.2rem 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #a8d8ea;
+            line-height: 1.8;
+        }
+        p code, li code {
+            background: rgba(0,180,216,0.1);
+            border: 1px solid var(--border);
             border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
+            padding: 1px 6px;
+            font-size: 13px;
+            color: var(--teal-light);
         }
 
-        pre code {
-            background: transparent;
-            color: inherit;
-            padding: 0;
+        /* Steps */
+        .steps { counter-reset: step; display: flex; flex-direction: column; gap: 12px; margin-top: 0.5rem; }
+        .step-item { display: flex; gap: 14px; align-items: flex-start; }
+        .step-num {
+            counter-increment: step;
+            min-width: 30px; height: 30px; border-radius: 50%;
+            background: rgba(0,180,216,0.15); border: 1px solid var(--teal);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: var(--teal); margin-top: 2px;
         }
+        .step-item p { margin: 0; font-size: 14px; }
 
-        /* Tabelas */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        /* Roadmap */
+        .roadmap { display: flex; flex-direction: column; gap: 10px; }
+        .roadmap-item { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+        .roadmap-item.done { color: var(--text-muted); }
+        .roadmap-item.done .rd-icon { color: var(--green); }
+        .roadmap-item.todo .rd-icon { color: var(--text-muted); }
+        .rd-icon { font-size: 16px; min-width: 20px; }
+        .tag-priority { font-size: 11px; font-weight: 600; background: rgba(233,196,106,0.15); color: var(--gold); border-radius: 4px; padding: 2px 7px; margin-left: 8px; }
+
+        /* Prompt box */
+        .prompt-box {
+            background: linear-gradient(135deg, rgba(17,34,64,0.8), rgba(13,27,46,0.9));
+            border: 1px solid rgba(233,196,106,0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
         }
+        .prompt-box h3 { color: var(--gold); margin-top: 0; }
+        .prompt-box ul { padding-left: 1.25rem; }
+        .prompt-box li { color: var(--text-muted); font-size: 14px; margin-bottom: 8px; line-height: 1.6; }
 
-        th, td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+        /* Log */
+        .log { display: flex; flex-direction: column; gap: 16px; }
+        .log-round {
+            background: var(--navy-mid); border: 1px solid var(--border);
+            border-radius: 10px; padding: 1rem 1.25rem;
         }
+        .log-round h4 { font-size: 13px; font-weight: 600; color: var(--teal); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; }
+        .log-shot { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text-muted); margin-bottom: 4px; }
+        .coord { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--text); background: rgba(255,255,255,0.05); border-radius: 4px; padding: 1px 6px; }
 
-        th {
-            background-color: var(--primary-color);
-            color: white;
-        }
+        /* Contributing */
+        .contrib-steps { display: flex; flex-direction: column; gap: 10px; }
+        .contrib-step { display: flex; gap: 12px; font-size: 14px; align-items: flex-start; }
+        .contrib-num { min-width: 24px; height: 24px; border-radius: 50%; background: rgba(0,180,216,0.1); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--teal); margin-top: 1px; }
+        .contrib-step p { margin: 0; color: var(--text-muted); }
 
-        tr:hover {
-            background-color: #f1f5f9;
-        }
-
-        /* Vídeo Responsivo */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin: 1.5rem 0;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* Badges e Imagens */
-        .badges img {
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Listas */
-        ul {
-            padding-left: 1.5rem;
-        }
-
-        .checklist {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .checklist li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Links */
-        a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Rodapé */
+        /* Footer */
         footer {
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 2rem;
             text-align: center;
-            font-size: 0.9rem;
-            color: #64748b;
+            color: var(--text-muted);
+            font-size: 13px;
         }
+        footer a { color: var(--teal); }
 
-        /* Responsividade */
+        /* Tip box */
+        .tip-box {
+            background: rgba(45,198,83,0.07);
+            border: 1px solid rgba(45,198,83,0.25);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13px;
+            color: #7dd4a0;
+            margin-top: 8px;
+        }
+        .tip-box strong { color: var(--green); }
+
+        /* Responsive */
         @media (max-width: 600px) {
-            .container { padding: 1rem; }
-            h1 { font-size: 2rem; }
-            .card { padding: 1rem; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .features-table th:nth-child(2), .features-table td:nth-child(2) { display: none; }
         }
     </style>
 </head>
 <body>
 
+<nav>
+    <div class="nav-brand">⚓ Battleship <span>2.0</span></div>
+    <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#install">Setup</a></li>
+        <li><a href="#docs">Docs</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-anchor">⚓ XVII Century Naval Warfare</div>
+    <h1>Battleship <span>2.0</span></h1>
+    <p>A modern take on the classic naval warfare game, designed for the XVII century setting with updated software engineering patterns.</p>
+    <div class="badges">
+        <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build">
+        <img src="https://img.shields.io/badge/Java-17%2B-blue" alt="Java">
+        <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+    </div>
+    <div class="hero-btns">
+        <a href="https://github.com/britoeabreu/Battleship2" class="btn btn-primary">Ver no GitHub</a>
+        <a href="apidocs/index.html" class="btn btn-outline">📚 Javadoc</a>
+    </div>
+</div>
+
 <div class="container">
 
-    <header>
-        <h1>⚓ Battleship 2.0</h1>
-        <div class="badges">
-            <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build Status">
-            <img src="https://img.shields.io/badge/Java-17%2B-blue" alt="Java Version">
-            <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-        </div>
-        <blockquote>
-            A modern take on the classic naval warfare game, designed for the XVII century setting with updated software engineering patterns.
-        </blockquote>
-    </header>
-
-    <section class="card">
-        <h2>Integração Contínua (CI) e Testes</h2>
-        <p>Este projeto utiliza o <strong>GitHub Actions</strong> para garantir a qualidade do código. Sempre que é feito um envio (<em>push</em>) para o ramo principal (<code>main</code>) ou para os ramos de desenvolvimento (<code>UnitTests_*</code>), um <em>workflow</em> automatizado utiliza o Apache Maven para compilar o projeto e executar toda a bateria de testes unitários desenvolvidos em JUnit.</p>
-        <a href="https://github.com/IGE-123012/BattleShip2/actions/workflows/BuildTest.yml">
-            <img src="https://github.com/IGE-123012/BattleShip2/actions/workflows/BuildTest.yml/badge.svg" alt="Java CI with Maven">
-        </a>
-    </section>
-
-    <section>
-        <h2>📼 Youtube Video</h2>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/i7IAQZBD4vY" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <!-- CI -->
+    <section id="ci">
+        <h2><span class="icon">🔄</span> Integração Contínua (CI) e Testes</h2>
+        <div class="ci-banner">
+            <p>Este projeto utiliza o <strong>GitHub Actions</strong> para garantir a qualidade do código. Sempre que é feito um <em>push</em> para o ramo <code>main</code> ou para os ramos de desenvolvimento (<code>UnitTests_*</code>), um workflow automatizado utiliza o Apache Maven para compilar o projeto e executar toda a bateria de testes JUnit.</p>
+            <a href="https://github.com/IGE-123012/BattleShip2/actions/workflows/BuildTest.yml" target="_blank">
+                <img src="https://github.com/IGE-123012/BattleShip2/actions/workflows/BuildTest.yml/badge.svg" alt="Java CI with Maven">
+            </a>
         </div>
     </section>
 
-    <section class="card">
-        <h2>🤖 Final PROMPT (Gemini PRO)</h2>
-        <ul>
-            <li><strong>Zero desperdício:</strong> Não repetirei tiros nem atirarei para fora do mapa (Z99 está fora de questão).</li>
-            <li><strong>Caçada implacável:</strong> Ao atingir ferro e madeira, focarei os tiros seguintes nas posições contíguas (Norte, Sul, Este, Oeste) e ignorarei as diagonais para poupar munição, sabendo que as Naus, Caravelas e Fragatas são linhas retas. Manterei a exceção da diagonal apenas se suspeitar do temível Galeão.</li>
-            <li><strong>Zona de exclusão:</strong> Navio ao fundo significa um "halo" de água intransitável (1 posição) demarcado imediatamente à sua volta. Nenhum tiro será desperdiçado nesse perímetro vazio.</li>
-            <li><strong>Honra marítima:</strong> Serei um vencedor magnânimo e, se a minha frota for ao fundo, declararei a derrota com a elevação de um verdadeiro marinheiro.</li>
-        </ul>
+    <!-- VIDEO -->
+    <section id="video">
+        <h2><span class="icon">📼</span> Youtube Video</h2>
+        <div class="video-card">
+            <div class="video-icon">▶️</div>
+            <div>
+                <a href="https://youtu.be/i7IAQZBD4vY" target="_blank">Ver demonstração no YouTube</a>
+                <p>Demonstração completa do jogo e das suas funcionalidades.</p>
+            </div>
+        </div>
     </section>
 
-    <section class="card">
-        <h2>📝 Diário de Bordo - Frota IA</h2>
-
-        <h3>Rajada 1</h3>
-        <ul>
-            <li>Tiro 1: E5 &rarr; Resultado: Água 💧</li>
-            <li>Tiro 2: C3 &rarr; Resultado: Água 💧</li>
-            <li>Tiro 3: H8 &rarr; Resultado: Água 💧</li>
-        </ul>
-
-        <h3>Rajada 2</h3>
-        <ul>
-            <li>Tiro 1: A2 &rarr; Resultado: Água 💧</li>
-            <li>Tiro 2: D7 &rarr; Resultado: Água 💧</li>
-            <li>Tiro 3: I4 &rarr; Resultado: Água 💧</li>
-        </ul>
-
-        <h3>Rajada 3</h3>
-        <ul>
-            <li>Tiro 1: B9 &rarr; Resultado: A aguardar relatório... ⏳</li>
-            <li>Tiro 2: G2 &rarr; Resultado: A aguardar relatório... ⏳</li>
-            <li>Tiro 3: J7 &rarr; Resultado: A aguardar relatório... ⏳</li>
-        </ul>
+    <!-- AI PROMPT -->
+    <section id="prompt">
+        <h2><span class="icon">🤖</span> Final PROMPT (Gemini PRO)</h2>
+        <div class="prompt-box">
+            <h3>Estratégia da IA</h3>
+            <ul>
+                <li><strong>Zero desperdício:</strong> Não repetirá tiros nem atirará para fora do mapa (Z99 está fora de questão).</li>
+                <li><strong>Caçada implacável:</strong> Ao atingir ferro e madeira, focará os tiros seguintes nas posições contíguas (Norte, Sul, Este, Oeste), ignorando as diagonais para poupar munição — sabendo que as Naus, Caravelas e Fragatas são linhas retas. Mantém a exceção da diagonal se suspeitar do temível Galeão.</li>
+                <li><strong>Zona de exclusão:</strong> Navio ao fundo significa um "halo" de água intransitável (1 posição) demarcado à sua volta. Nenhum tiro será desperdiçado nesse perímetro vazio.</li>
+                <li><strong>Honra marítima:</strong> Será um vencedor magnânimo e, se a frota for ao fundo, declarará a derrota com a elevação de um verdadeiro marinheiro.</li>
+            </ul>
+        </div>
     </section>
 
-    <section>
-        <h2>📖 Table of Contents</h2>
-        <ul>
-            <li><a href="#project-overview">Project Overview</a></li>
-            <li><a href="#key-features">Key Features</a></li>
-            <li><a href="#technical-stack">Technical Stack</a></li>
-            <li><a href="#installation-setup">Installation & Setup</a></li>
-            <li><a href="#code-architecture">Code Architecture & Documentation</a></li>
-            <li><a href="#roadmap">Roadmap</a></li>
-            <li><a href="#contributing">Contributing</a></li>
-        </ul>
+    <!-- LOG -->
+    <section id="log">
+        <h2><span class="icon">📝</span> Diário de Bordo — Frota IA</h2>
+        <div class="log">
+            <div class="log-round">
+                <h4>Rajada 1</h4>
+                <div class="log-shot"><span class="coord">E5</span> Água 💧</div>
+                <div class="log-shot"><span class="coord">C3</span> Água 💧</div>
+                <div class="log-shot"><span class="coord">H8</span> Água 💧</div>
+            </div>
+            <div class="log-round">
+                <h4>Rajada 2</h4>
+                <div class="log-shot"><span class="coord">A2</span> Água 💧</div>
+                <div class="log-shot"><span class="coord">D7</span> Água 💧</div>
+                <div class="log-shot"><span class="coord">I4</span> Água 💧</div>
+            </div>
+            <div class="log-round">
+                <h4>Rajada 3</h4>
+                <div class="log-shot"><span class="coord">B9</span> A aguardar relatório... ⏳</div>
+                <div class="log-shot"><span class="coord">G2</span> A aguardar relatório... ⏳</div>
+                <div class="log-shot"><span class="coord">J7</span> A aguardar relatório... ⏳</div>
+            </div>
+        </div>
     </section>
 
-    <section id="project-overview">
-        <h2>🎯 Project Overview</h2>
+    <!-- OVERVIEW -->
+    <section id="overview">
+        <h2><span class="icon">🎯</span> Project Overview</h2>
         <p>This project serves as a template and reference for students learning <strong>Object-Oriented Programming (OOP)</strong> and <strong>Software Quality</strong>. It simulates a battleship environment where players must strategically place ships and sink the enemy fleet.</p>
-
         <h3>🎮 The Rules</h3>
-        <p>The game is played on a grid (typically 10x10). The coordinate system is defined as:</p>
-        <p style="text-align: center; font-size: 1.2rem;">
-            $$ (x, y) \in \{0, \dots, 9\} \times \{0, \dots, 9\} $$
-        </p>
+        <p>The game is played on a grid (typically 10×10). The coordinate system is defined as:</p>
+        <pre><code>(x, y) ∈ {0, …, 9} × {0, …, 9}</code></pre>
         <p>Hits are calculated based on the intersection of the shot vector and the ship's bounding box.</p>
     </section>
 
-    <section id="key-features">
-        <h2>✨ Key Features</h2>
-        <table>
+    <!-- FEATURES -->
+    <section id="features">
+        <h2><span class="icon">✨</span> Key Features</h2>
+        <table class="features-table">
             <thead>
             <tr>
                 <th>Feature</th>
                 <th>Description</th>
-                <th style="text-align: center;">Status</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td><strong>Grid System</strong></td>
-                <td>Flexible N x N board generation.</td>
-                <td style="text-align: center;">✅</td>
+                <td>Grid System</td>
+                <td>Flexible N×N board generation.</td>
+                <td><span class="status status-done">✅</span></td>
             </tr>
             <tr>
-                <td><strong>Ship Varieties</strong></td>
+                <td>Ship Varieties</td>
                 <td>Galleons, Frigates, and Brigantines (XVII Century theme).</td>
-                <td style="text-align: center;">✅</td>
+                <td><span class="status status-done">✅</span></td>
             </tr>
             <tr>
-                <td><strong>AI Opponent</strong></td>
+                <td>AI Opponent</td>
                 <td>Heuristic-based targeting system.</td>
-                <td style="text-align: center;">🚧</td>
+                <td><span class="status status-wip">🚧</span></td>
             </tr>
             <tr>
-                <td><strong>Network Play</strong></td>
+                <td>Network Play</td>
                 <td>Socket-based multiplayer.</td>
-                <td style="text-align: center;">❌</td>
+                <td><span class="status status-no">❌</span></td>
             </tr>
             </tbody>
         </table>
     </section>
 
-    <section id="technical-stack" class="card">
-        <h2>🛠 Technical Stack</h2>
-        <ul>
-            <li><strong>Language:</strong> Java 17</li>
-            <li><strong>Build Tool:</strong> Maven / Gradle</li>
-            <li><strong>Testing:</strong> JUnit 5</li>
-            <li><strong>Logging:</strong> Log4j2</li>
-        </ul>
+    <!-- STACK -->
+    <section id="stack">
+        <h2><span class="icon">🛠</span> Technical Stack</h2>
+        <div class="stack">
+            <div class="pill">☕ Java <span>17</span></div>
+            <div class="pill">📦 Maven <span>/ Gradle</span></div>
+            <div class="pill">🧪 JUnit <span>5</span></div>
+            <div class="pill">📋 Log4j2</div>
+        </div>
     </section>
 
-    <section id="installation-setup">
-        <h2>🚀 Installation & Setup</h2>
+    <!-- INSTALL -->
+    <section id="install">
+        <h2><span class="icon">🚀</span> Installation &amp; Setup</h2>
         <h3>Prerequisites</h3>
-        <ul>
-            <li>JDK 17 or higher</li>
-            <li>Git</li>
-        </ul>
-
+        <div class="stack" style="margin-bottom:1.5rem">
+            <div class="pill">☕ JDK 17+</div>
+            <div class="pill">🐙 Git</div>
+        </div>
         <h3>Step-by-Step</h3>
-        <ol>
-            <li><strong>Clone the repository:</strong>
-                <pre><code>git clone https://github.com/britoeabreu/Battleship2.git</code></pre>
-            </li>
-            <li><strong>Navigate to directory:</strong>
-                <pre><code>cd Battleship2</code></pre>
-            </li>
-            <li><strong>Compile and Run:</strong>
-                <pre><code>javac Main.java && java Main</code></pre>
-            </li>
-        </ol>
+        <div class="steps">
+            <div class="step-item">
+                <div class="step-num">1</div>
+                <div>
+                    <p>Clone the repository:</p>
+                    <pre><code>git clone https://github.com/britoeabreu/Battleship2.git</code></pre>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">2</div>
+                <div>
+                    <p>Navigate to directory:</p>
+                    <pre><code>cd Battleship2</code></pre>
+                </div>
+            </div>
+            <div class="step-item">
+                <div class="step-num">3</div>
+                <div>
+                    <p>Compile and run:</p>
+                    <pre><code>javac Main.java &amp;&amp; java Main</code></pre>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section id="code-architecture">
-        <h2>📚 Documentation</h2>
-        <p>You can access the generated Javadoc here:</p>
-        <p>👉 <a href="https://britoeabreu.github.io/Battleship2/" target="_blank">Battleship2 API Documentation</a></p>
+    <!-- DOCS -->
+    <section id="docs">
+        <h2><span class="icon">📚</span> Documentation</h2>
+        <p>Access the generated Javadoc here: <a href="https://britoeabreu.github.io/Battleship2/" target="_blank">Battleship2 API Documentation →</a></p>
 
         <h3>Core Logic</h3>
         <pre><code>public class Ship {
@@ -373,66 +439,68 @@
     }
 }</code></pre>
 
-        <h3>Design Patterns Used:</h3>
-        <ul>
-            <li><strong>Strategy Pattern:</strong> For different AI difficulty levels.</li>
-            <li><strong>Observer Pattern:</strong> To update the UI when a ship is hit.</li>
-        </ul>
+        <h3>Design Patterns Used</h3>
+        <div class="stack">
+            <div class="pill">🎯 Strategy Pattern <span>AI difficulty levels</span></div>
+            <div class="pill">👁️ Observer Pattern <span>UI ship hit updates</span></div>
+        </div>
 
         <h3>Logic Flow</h3>
-        <div class="mermaid">
-            graph TD
-            A[Start Game] --> B{Place Ships}
-            B --> C[Player Turn]
-            C --> D[Target Coordinate]
-            D --> E{Hit or Miss?}
-            E -- Hit --> F[Check if Sunk]
-            E -- Miss --> G[AI Turn]
-            F --> G
-            G --> C
+        <pre><code>Start Game
+    └─► Place Ships
+         └─► Player Turn
+              └─► Target Coordinate
+                   ├─► Hit  ──► Check if Sunk ──► AI Turn
+                   └─► Miss ──────────────────► AI Turn
+                                                  └─► (loop)</code></pre>
+    </section>
+
+    <!-- TESTING -->
+    <section id="testing">
+        <h2><span class="icon">🧪</span> Testing</h2>
+        <p>High-coverage unit testing to ensure game stability. Run tests using:</p>
+        <pre><code>mvn test</code></pre>
+        <div class="tip-box">
+            <strong>💡 TIP:</strong> Use the <code>-Dtest=ClassName</code> flag to run specific test suites during development.
         </div>
     </section>
 
-    <section id="roadmap" class="card">
-        <h2>🗺 Roadmap</h2>
-        <ul class="checklist">
-            <li><input type="checkbox" checked disabled> Basic grid implementation</li>
-            <li><input type="checkbox" checked disabled> Ship placement validation</li>
-            <li><input type="checkbox" disabled> Add sound effects (SFX)</li>
-            <li><input type="checkbox" disabled> Implement "Fog of War" mechanic</li>
-            <li><input type="checkbox" disabled> <strong>Multiplayer Integration</strong> (High Priority)</li>
-        </ul>
+    <!-- ROADMAP -->
+    <section id="roadmap">
+        <h2><span class="icon">🗺</span> Roadmap</h2>
+        <div class="roadmap">
+            <div class="roadmap-item done"><span class="rd-icon">✅</span> Basic grid implementation</div>
+            <div class="roadmap-item done"><span class="rd-icon">✅</span> Ship placement validation</div>
+            <div class="roadmap-item todo"><span class="rd-icon">⬜</span> Add sound effects (SFX)</div>
+            <div class="roadmap-item todo"><span class="rd-icon">⬜</span> Implement "Fog of War" mechanic</div>
+            <div class="roadmap-item todo"><span class="rd-icon">⬜</span> Multiplayer Integration <span class="tag-priority">High Priority</span></div>
+        </div>
     </section>
 
-    <section id="testing">
-        <h2>🧪 Testing</h2>
-        <p>We use high-coverage unit testing to ensure game stability. Run tests using:</p>
-        <pre><code>mvn test</code></pre>
-
-        <blockquote class="tip-block">
-            <strong>💡 TIP:</strong> Use the <code>-Dtest=ClassName</code> flag to run specific test suites during development.
-        </blockquote>
-    </section>
-
+    <!-- CONTRIBUTING -->
     <section id="contributing">
-        <h2>🤝 Contributing</h2>
+        <h2><span class="icon">🤝</span> Contributing</h2>
         <p>Contributions are what make the open-source community such an amazing place to learn, inspire, and create.</p>
-        <ol>
-            <li>Fork the Project</li>
-            <li>Create your Feature Branch (<code>git checkout -b feature/AmazingFeature</code>)</li>
-            <li>Commit your Changes (<code>git commit -m 'Add some AmazingFeature'</code>)</li>
-            <li>Push to the Branch (<code>git push origin feature/AmazingFeature</code>)</li>
-            <li>Open a <strong>Pull Request</strong></li>
-        </ol>
+        <div class="contrib-steps">
+            <div class="contrib-step"><div class="contrib-num">1</div><p>Fork the Project</p></div>
+            <div class="contrib-step"><div class="contrib-num">2</div><p>Create your Feature Branch: <code>git checkout -b feature/AmazingFeature</code></p></div>
+            <div class="contrib-step"><div class="contrib-num">3</div><p>Commit your Changes: <code>git commit -m 'Add some AmazingFeature'</code></p></div>
+            <div class="contrib-step"><div class="contrib-num">4</div><p>Push to the Branch: <code>git push origin feature/AmazingFeature</code></p></div>
+            <div class="contrib-step"><div class="contrib-num">5</div><p>Open a <strong>Pull Request</strong></p></div>
+        </div>
     </section>
 
-    <footer>
-        <p><strong>📄 License:</strong> Distributed under the MIT License. See <code>LICENSE</code> for more information.</p>
-        <p><strong>Maintained by:</strong> <a href="https://github.com/britoeabreu">@britoeabreu</a><br>
-            <em>Created for the Software Engineering students at ISCTE-IUL.</em></p>
-    </footer>
+    <!-- LICENSE -->
+    <section id="license">
+        <h2><span class="icon">📄</span> License</h2>
+        <p>Distributed under the MIT License. See <code>LICENSE</code> for more information.</p>
+    </section>
 
 </div>
+
+<footer>
+    <p>Maintained by <a href="https://github.com/britoeabreu" target="_blank">@britoeabreu</a> &nbsp;·&nbsp; Created for Software Engineering students at ISCTE-IUL.</p>
+</footer>
 
 </body>
 </html>
