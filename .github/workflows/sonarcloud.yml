@@ -1,6 +1,9 @@
 # Número de Aluno: 122996 - Nome: Laura Coelho
 name: SonarCloud Analysis
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
