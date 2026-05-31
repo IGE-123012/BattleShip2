@@ -1,11 +1,41 @@
 {
-  "name": "Batalha Naval Dev Environment",
+  "name": "BattleShip2 — Dev Environment",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile",
+    "context": ".."
   },
+
+  // Reencaminhar a porta da aplicação (se aplicável)
+  "forwardPorts": [],
+
+  // Extensões VS Code instaladas automaticamente no container
   "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-maven",
+        "vscjava.vscode-java-test",
+        "redhat.java",
+        "vscjava.vscode-java-debug",
+        "sonarsource.sonarlint-vscode",
+        "eamodio.gitlens",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "java.jdt.ls.java.home": "/opt/java/openjdk",
+        "java.compile.nullAnalysis.mode": "automatic",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4
+      }
+    },
     "jetbrains": {
       "backend": "IntelliJ"
     }
-  }
+  },
+
+  // Comando executado após o container ser criado
+  "postCreateCommand": "mvn dependency:resolve -B --no-transfer-progress && echo '✅ Ambiente pronto! Usa: mvn clean compile && mvn test'",
+
+  // Utilizador não-root para segurança
+  "remoteUser": "root"
 }

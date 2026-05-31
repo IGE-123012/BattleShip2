@@ -1,0 +1,96 @@
+name: Complete CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+# Permite acesso de escrita ao repositório para o deploy do GitHub Pages
+permissions:
+  contents: write
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ==========================================
+      # Passo 1: Checkout do Código
+      # ==========================================
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necessário para a análise do SonarCloud
+
+      # ==========================================
+      # Configurar Ambiente Java 21
+      # ==========================================
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      # ==========================================
+      # Passo 2: Compilar e Testar o Código
+      # ==========================================
+      - name: Verificar dependências
+        run: mvn dependency:resolve -B --no-transfer-progress
+
+      - name: Compilar e Testar (mvn clean verify)
+        run: mvn clean verify -B --no-transfer-progress
+
+      # ==========================================
+      # Passo 3: Análise do SonarCloud
+      # ==========================================
+      - name: Análise SonarCloud Quality Gate
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mvn sonar:sonar \
+            -Dsonar.projectKey=IGE-123012_BattleShip2 \
+            -Dsonar.organization=ige-123012-2 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -B --no-transfer-progress
+
+      # ==========================================
+      # Passo 4: Docker Login, Build & Push
+      # ==========================================
+      - name: Configurar QEMU (Suporte Multi-plataforma)
+        uses: docker/setup-qemu-action@v3
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build da imagem Docker e Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: antoniochen122473/battleship-game:latest
+
+      # ==========================================
+      # Passo 5: Geração de Documentação
+      # ==========================================
+      - name: Gerar Documentação Maven (Site & Javadoc)
+        run: mvn site -DskipTests -B --no-transfer-progress
+
+      # ==========================================
+      # Passo 6: Publicar docs na branch main/docs
+      # (GitHub Pages está configurado para ler de main/docs)
+      # ==========================================
+      - name: Publicar documentação no GitHub Pages (main/docs)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          git diff --staged --quiet || git commit -m "docs: atualizar site gerado por mvn site [skip ci]"
+          git push
